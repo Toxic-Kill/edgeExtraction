@@ -1,20 +1,25 @@
-﻿// edgeExtraction.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
+﻿#include <iostream>
+#include<opencv2/opencv.hpp>
 
-#include <iostream>
+using namespace std;
+using namespace cv;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	VideoCapture cap(0);//调用摄像头
+	while (1)
+	{
+		cv::Mat srcMat;
+		cv::Mat dxMat;
+		cv::Mat dyMat;
+		cap >> srcMat;//捕捉当前帧
+		Sobel(srcMat, dxMat, CV_16SC1, 1, 0, 3);//用Sobel算子提取x方向上边缘
+		Sobel(srcMat, dyMat, CV_16SC1, 0, 1, 3);//用Sobel算子提取y方向上边缘
+		cv::imshow("frame", srcMat);//显示原图像
+		cv::imshow("x", dxMat);//显示提取x方向上边缘的图像
+		cv::imshow("y", dyMat);//显示提取y方向上边缘的图像
+		waitKey(30);
+	}
 }
 
-// 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
-// 调试程序: F5 或调试 >“开始调试”菜单
 
-// 入门使用技巧: 
-//   1. 使用解决方案资源管理器窗口添加/管理文件
-//   2. 使用团队资源管理器窗口连接到源代码管理
-//   3. 使用输出窗口查看生成输出和其他消息
-//   4. 使用错误列表窗口查看错误
-//   5. 转到“项目”>“添加新项”以创建新的代码文件，或转到“项目”>“添加现有项”以将现有代码文件添加到项目
-//   6. 将来，若要再次打开此项目，请转到“文件”>“打开”>“项目”并选择 .sln 文件
